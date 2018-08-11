@@ -23,6 +23,11 @@ public class Asteroid {
 
     private int innerRadius;
 
+    public int destructionSpeed = 100;
+
+    private boolean terminating = false;
+    public boolean terminated = false;
+
 
     public List<PointF> outerVerticesL = new LinkedList<>();
     public List<PointF> outerVerticesR = new LinkedList<>();
@@ -47,8 +52,8 @@ public class Asteroid {
         int outerMaxArc = random.nextInt(27) + 45;
         int totalArc = 0;
         while (totalArc < 360) {
-            float x0 = (float) (radius * Math.cos(0.0175 * totalArc) + x);
-            float y0 = (float) (radius * Math.sin(0.0175 * totalArc) + y);
+            float x0 = (float) (radius * Math.cos(0.0175 * totalArc));
+            float y0 = (float) (radius * Math.sin(0.0175 * totalArc));
             if (totalArc > 180)
                 outerVerticesL.add(new PointF(x0, y0));
             else
@@ -59,8 +64,8 @@ public class Asteroid {
 
         int innerVerticesCount = random.nextInt(2);
         if (innerVerticesCount == 1) {
-            float x1 = (float) (innerRadius * Math.cos(0.0175 * 90) + x);
-            float y1 = (float) (innerRadius * Math.sin(0.0175 * 90) + y);
+            float x1 = (float) (innerRadius * Math.cos(0.0175 * 90) );
+            float y1 = (float) (innerRadius * Math.sin(0.0175 * 90) );
             innerVertices.add(new PointF(x1, y1));
 
 
@@ -73,8 +78,8 @@ public class Asteroid {
             }
 
 
-            float x2 = (float) (innerRadius * Math.cos(0.0175 * 270) + x);
-            float y2 = (float) (innerRadius * Math.sin(0.0175 * 270) + y);
+            float x2 = (float) (innerRadius * Math.cos(0.0175 * 270) );
+            float y2 = (float) (innerRadius * Math.sin(0.0175 * 270));
             innerVertices.add(new PointF(x2, y2));
 
             for (int i = 0; i < outerVerticesL.size() - 1; i++){
@@ -89,8 +94,8 @@ public class Asteroid {
         } else {
 
             int shift = random .nextInt(360);
-            float x1 = (float) (innerRadius * Math.cos(0.0175 * shift) + x);
-            float y1 = (float) (innerRadius * Math.sin(0.0175 * shift) + y);
+            float x1 = (float) (innerRadius * Math.cos(0.0175 * shift) );
+            float y1 = (float) (innerRadius * Math.sin(0.0175 * shift));
             innerVertices.add(new PointF(x1, y1));
 
 
@@ -120,12 +125,7 @@ public class Asteroid {
 
     public void onDraw(Canvas canvas) {
 
-//        if (k > 0){
-//            k--;
-//            return;
-//        }
-//
-//        k = 1;
+
         paint.setColor(Color.MAGENTA);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
@@ -137,10 +137,10 @@ public class Asteroid {
             for (int i = 0; i < 3; i++){
 
                 Path path = new Path();
-                path.moveTo(pf[0].x, pf[0].y);
-                path.lineTo(pf[1].x, pf[1].y);
-                path.lineTo(pf[2].x, pf[2].y);
-                path.lineTo(pf[0].x, pf[0].y);
+                path.moveTo(pf[0].x + x, pf[0].y + y);
+                path.lineTo(pf[1].x + x, pf[1].y + y);
+                path.lineTo(pf[2].x + x, pf[2].y + y);
+                path.lineTo(pf[0].x + x, pf[0].y + y);
                 path.close();
                 canvas.drawPath(path, paint);
 
