@@ -36,10 +36,10 @@ public class Asteroid {
         this.radius = radius;
         this.phase = random.nextInt(360);
         innerRadius = (int) (radius * 0.3);
-        colors[0] = 0xff916f6f;
-        colors[1] = 0xffac9393;
-        colors[2] = 0xffc8b7b7;
-        colors[3] = 0xffe3dbdb;
+        colors[0] = 0xffff0000;
+        colors[1] = 0xffff2a2a;
+        colors[2] = 0xffff5555;
+        colors[3] = 0xffff8080;
         generate();
     }
 
@@ -102,11 +102,11 @@ public class Asteroid {
                 faces.add(pf);
             }
 
-            for (int i = 0; i < outerVerticesR.size() - 1; i++){
+            for (int i = 0; i < outerVerticesL.size() - 1; i++){
                 PointF[] pf = new PointF[3];
                 pf[0] = new PointF(x1, y1);
-                pf[1] = new PointF(outerVerticesR.get(i).x, outerVerticesR.get(i).y);
-                pf[2] = new PointF(outerVerticesR.get(i + 1).x, outerVerticesR.get(i + 1).y);
+                pf[1] = new PointF(outerVerticesL.get(i).x, outerVerticesR.get(i).y);
+                pf[2] = new PointF(outerVerticesL.get(i + 1).x, outerVerticesR.get(i + 1).y);
                 faces.add(pf);
             }
 
