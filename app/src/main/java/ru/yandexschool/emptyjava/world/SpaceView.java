@@ -23,6 +23,7 @@ public class SpaceView extends View {
 
     public void addItem(Ball ball) {
         items.add(ball);
+        invalidate();
     }
 
     public void startGame() {
@@ -84,12 +85,18 @@ public class SpaceView extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float x = event.getX();
             float y = event.getY();
-            for (Ball ball : items) {
-//                if (getUpLeft(ball).x) {
-//
-//                }
+            boolean key = false;
+            for (int i = items.size() - 1; i >= 0; i--) {
+                Ball ball = items.get(i);
+                if (((x > getUpLeft(ball).x) && (x < getUpRight(ball).x))
+                        && ((y > getUpLeft(ball).y) && (y < getDownLeft(ball).y))) {
+                    key = true;
+                    items.remove(ball);
+                }
             }
-
+            if (key) {
+                invalidate();
+            }
             performClick();
         }
         return super.onTouchEvent(event);

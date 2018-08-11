@@ -6,16 +6,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.RelativeLayout;
 
-import ru.yandexschool.emptyjava.graphics.HeavenView;
-import android.os.Handler;
-import android.view.ViewGroup;
+import java.util.Random;
 
+import ru.yandexschool.emptyjava.graphics.HeavenView;
 import ru.yandexschool.emptyjava.utils.WindowUtils;
 import ru.yandexschool.emptyjava.world.Ball;
 import ru.yandexschool.emptyjava.world.SpaceView;
 
 public class MainActivity extends Activity {
 
+    SpaceView space;
+    Random random = new Random(System.currentTimeMillis());
 
     void moveHeaven(final HeavenView ball) {
         final Handler handler = new Handler();
@@ -29,10 +30,6 @@ public class MainActivity extends Activity {
         }, 16);
     }
 
-
-    SpaceView space;
-    ViewGroup root;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,48 +37,39 @@ public class MainActivity extends Activity {
         RelativeLayout layout = findViewById(R.id.root);
         final HeavenView heavenView = new HeavenView(getApplicationContext(), new RectF(0f, 0f, 1000f, 1000f));
         layout.addView(heavenView);
+
         for (int i = 0; i < 200; i++) {
             heavenView.update();
         }
 
-
         moveHeaven(heavenView);
-    }
-}
-
-        root = findViewById(R.id.root);
 
         space = new SpaceView(this);
-        root.addView(space);
+        layout.addView(space);
 
-        for (int i = 0; i < 8; i++) {
-            space.addItem(new Ball(100 + i * 100, 30));
-        }
+        space.startGame();
 
-        for (int i = 0; i < 8; i++) {
-            space.addItem(new Ball(120 + i * 100, 175));
-        }
-
-//        for (int i = 0; i < 8; i++) {
-//            space.addItem(new Ball(100 + i * 100, 325));
-//        }
-//
-//        space.startGame();
+        generate();
     }
 
-    void throwBall(final SpaceView ball) {
-        final Handler handler = new Handler();
+    void generate() {
+        Handler handler = new Handler();
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ball.setY(ball.getY() + 8);
-                if (ball.getY() < (WindowUtils.getWindowHeight(MainActivity.this))) {
-                    handler.postDelayed(this, 16);
-                } else {
-                    root.removeView(ball);
-                }
+                int randomX = random.nextInt();
+
+                Ball ball = new Ball();
+
+                randomX = randomX % (WindowUtils.getWindowWidth(MainActivity.this) - ball.radius * 2);
+                randomX = Math.abs(randomX) + ball.radius * 2;
+                ball.x = randomX;
+                ball.y = -100;
+                space.addItem(ball);
+                handler.postDelayed(this, 100);
             }
-        }, 16);
+        }, 1000);
     }
 
 }
