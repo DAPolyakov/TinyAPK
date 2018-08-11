@@ -69,8 +69,10 @@ public class MainActivity extends Activity {
             int right = bottomBall.getCoordRight();
 
             if (space.isCollision(top, bottom, left, right)) {
-                Log.wtf("dima", "finish()");
-//                Toast.makeText(this, "FINISH!", Toast.LENGTH_SHORT).show();
+                FinishDialog dialog = new FinishDialog();
+                dialog.setCancelable(false);
+                dialog.show(getFragmentManager(), "");
+                space.gameEnd();
             }
         };
     }

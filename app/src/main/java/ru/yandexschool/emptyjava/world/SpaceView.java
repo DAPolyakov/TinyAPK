@@ -22,6 +22,8 @@ public class SpaceView extends View {
     private ArrayList<Ball> items = new ArrayList<>();
     public InvalidateListener invalidateListener = null;
 
+    boolean isGame = false;
+
     public void addItem(Ball ball) {
         items.add(ball);
         invalidate();
@@ -54,6 +56,7 @@ public class SpaceView extends View {
     }
 
     public void startGame(int windowHeight) {
+        isGame = true;
         this.windowHeight = windowHeight;
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -91,6 +94,8 @@ public class SpaceView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (isGame == false) return;
+
         for (Ball ball : items) {
 //            canvas.drawCircle(ball.x, ball.y, ball.radius, ball.paint);
             ball.onDraw(canvas);
@@ -141,5 +146,9 @@ public class SpaceView extends View {
             performClick();
         }
         return super.onTouchEvent(event);
+    }
+
+    public void gameEnd() {
+        isGame = false;
     }
 }

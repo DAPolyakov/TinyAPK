@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorButton">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorButton"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/gameOver"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="GameOver!"
-        android:textStyle="bold|italic"
         android:textSize="20sp"
-        android:id="@+id/gameOver"
-        />
+        android:textStyle="bold|italic" />
+
     <TextView
+        android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_below="@+id/gameOver"
         android:gravity="center"
         android:text="Красавчик!"
-        android:textSize="20sp"
-        android:id="@+id/text1"
-        android:layout_below="@+id/gameOver"
-        />
+        android:textSize="20sp" />
 
 
 </RelativeLayout>
