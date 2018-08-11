@@ -64,7 +64,7 @@ public class HeavenView extends View {
 
         for (Star pt : stars) {
             assert (pt.layer >= 0 && pt.layer < 3);
-            Log.d("XXX", String.format("%d", pt.layer));
+            //Log.d("XXX", String.format("%d", pt.layer));
             pt.y += starSpeed * speedFactor[pt.layer];
 
         }
