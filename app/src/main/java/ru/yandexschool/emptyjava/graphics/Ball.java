@@ -22,7 +22,7 @@ public class Ball {
 
     private int innerRadius;
 
-    public int destructionSpeed = 100;
+    public int destructionSpeed = 1;
 
     private boolean terminating = false;
     public boolean terminated = false;
@@ -42,6 +42,10 @@ public class Ball {
         colors[2] = 0xffff5555;
         colors[3] = 0xffff8080;
         generate();
+    }
+
+    public void terminate(){
+        terminating = true;
     }
 
     private void generate() {
@@ -102,6 +106,17 @@ public class Ball {
                 pf[2] = new PointF(outerVerticesR.get(i + 1).x, outerVerticesR.get(i + 1).y);
                 faces.add(pf);
             }
+            PointF[] pf0 = new PointF[3];
+            pf0[0] = new PointF(x1, y1);
+            pf0[1] = new PointF(outerVerticesL.get(0).x, outerVerticesL.get(0).y);
+            pf0[2] = new PointF(outerVerticesR.get(outerVerticesR.size() - 1).x, outerVerticesR.get(outerVerticesR.size() - 1).y);
+            faces.add(pf0);
+
+            PointF[] pf1 = new PointF[3];
+            pf1[0] = new PointF(x1, y1);
+            pf1[1] = new PointF(outerVerticesR.get(0).x, outerVerticesR.get(0).y);
+            pf1[2] = new PointF(outerVerticesL.get(outerVerticesL.size() - 1).x, outerVerticesL.get(outerVerticesL.size() - 1).y);
+            faces.add(pf1);
 
             for (int i = 0; i < outerVerticesL.size() - 1; i++) {
                 PointF[] pf = new PointF[3];
@@ -125,6 +140,15 @@ public class Ball {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 
+        if(terminating) {
+            destructionSpeed *= 2;
+            if (destructionSpeed > 10000){
+                terminated = true;
+            }
+        }
+
+        if (terminated)
+            return;
 
         for (PointF[] pf : faces) {
             paint.setColor(colors[random.nextInt(4)]);
@@ -132,10 +156,10 @@ public class Ball {
             for (int i = 0; i < 3; i++) {
 
                 Path path = new Path();
-                path.moveTo(pf[0].x + x, pf[0].y + y);
-                path.lineTo(pf[1].x + x, pf[1].y + y);
-                path.lineTo(pf[2].x + x, pf[2].y + y);
-                path.lineTo(pf[0].x + x, pf[0].y + y);
+                path.moveTo(pf[0].x * destructionSpeed + x, pf[0].y * destructionSpeed + y);
+                path.lineTo(pf[1].x * destructionSpeed + x, pf[1].y * destructionSpeed + y);
+                path.lineTo(pf[2].x * destructionSpeed + x, pf[2].y * destructionSpeed + y);
+                path.lineTo(pf[0].x * destructionSpeed + x, pf[0].y * destructionSpeed + y);
                 path.close();
                 canvas.drawPath(path, paint);
 
