@@ -5,23 +5,49 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
-
-import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 public class BottomBallView extends View {
-    private  float ballRadius;
-    private  Paint paint;
-    private float x = 0;
-    private float y = 0;
+    private float ballRadius;
+    private Paint paint;
+    float x = 0;
+    float y = 0;
+
+    InvalidateListener invalidateListener = null;
+
+
     private final float mSpeed = 1.5f;
 
+    public int getCoordTop() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[1] + (int) y - ((int) ballRadius);
+    }
+
+    public int getCoordBottom() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[1] + (int) y + ((int) ballRadius);
+    }
+
+    public int getCoordLeft() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[0] + (int) x - (int) ballRadius;
+    }
+
+    public int getCoordRight() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[0] + (int) x + (int) ballRadius;
+    }
 
     private static final float BALL_RADIUS = 15.0f;
+
 
     public BottomBallView(Context context) {
         super(context);
@@ -33,7 +59,7 @@ public class BottomBallView extends View {
         initParams();
     }
 
-    public void initParams(){
+    public void initParams() {
         final float scale = getContext().getResources().getDisplayMetrics().density;
 
         paint = new Paint();
@@ -102,6 +128,9 @@ public class BottomBallView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(x, y, ballRadius, paint);
 
+        if (invalidateListener != null) {
+            invalidateListener.invalidate();
+        }
     }
 
     float lastX = 0;
@@ -133,9 +162,10 @@ public class BottomBallView extends View {
             x = getWidth() - ballRadius;
         }
     }
+
     private Shader createShader() {
         LinearGradient shader3 = new LinearGradient(0, 0, 100, 20,
-                new int[] { Color.RED, Color.CYAN, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA }, null,
+                new int[]{Color.RED, Color.CYAN, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA}, null,
                 Shader.TileMode.MIRROR);
         return shader3;
     }

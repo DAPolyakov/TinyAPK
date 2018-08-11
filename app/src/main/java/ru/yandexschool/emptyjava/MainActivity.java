@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -18,6 +18,8 @@ public class MainActivity extends Activity {
 
     SpaceView space;
     Random random = new Random(System.currentTimeMillis());
+
+    BottomBallView bottomBall;
 
     void moveHeaven(final HeavenView ball) {
         final Handler handler = new Handler();
@@ -34,10 +36,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         RelativeLayout layout = findViewById(R.id.root);
         final HeavenView heavenView = new HeavenView(this, new RectF(0f, 0f, 1000f, 1000f));
-
 
         layout.addView(heavenView);
 
@@ -46,17 +48,29 @@ public class MainActivity extends Activity {
         }
 
         moveHeaven(heavenView);
-//        final BottomBallView bottomBall = new BottomBallView(this);
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        layout.addView(bottomBall, params);
-
 
         space = new SpaceView(this);
         layout.addView(space);
-
-        space.startGame();
+        space.startGame(WindowUtils.getWindowHeight(this));
 
         generate();
+
+        bottomBall = findViewById(R.id.bottomBall);
+
+
+        space.invalidateListener = () -> {
+            int[] location = new int[2];
+            bottomBall.getLocationOnScreen(location);
+
+            int top = bottomBall.getCoordTop();
+            int bottom = bottomBall.getCoordBottom();
+            int left = bottomBall.getCoordLeft();
+            int right = bottomBall.getCoordRight();
+
+            if (space.isCollision(top, bottom, left, right)) {
+                Toast.makeText(this, "FINISH!", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     void generate() {
@@ -74,7 +88,7 @@ public class MainActivity extends Activity {
                 ball.x = randomX;
                 ball.y = -100;
                 space.addItem(ball);
-                handler.postDelayed(this, 100);
+                handler.postDelayed(this, 500);
             }
         }, 1000);
     }
