@@ -40,6 +40,7 @@ public class SpaceView extends View {
     private boolean isBallCollision(Ball ball, int top, int bottom, int start, int right) {
 
         if (getDownLeft(ball).y < top) return false;
+        if (getUpLeft(ball).y > bottom) return false;
 
         if ((getDownLeft(ball).x >= start) && (getDownLeft(ball).x <= right)) {
             return true;
