@@ -11,6 +11,7 @@
     <ru.yandexschool.emptyjava.BottomBallView
         android:paddingTop="100dp"
         android:paddingBottom="20dp"
+        android:id="@+id/bottomBall"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_alignParentBottom="true" />
