@@ -46,14 +46,10 @@ public class MainActivity extends Activity {
         }
 
         moveHeaven(heavenView);
-        final BottomBallView bottomBall = new BottomBallView(this);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout.addView(bottomBall, params);
+//        final BottomBallView bottomBall = new BottomBallView(this);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        layout.addView(bottomBall, params);
 
-    }
-}
-
-        root = findViewById(R.id.root);
 
         space = new SpaceView(this);
         layout.addView(space);

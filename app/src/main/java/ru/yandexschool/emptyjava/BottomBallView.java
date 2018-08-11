@@ -25,30 +25,33 @@ public class BottomBallView extends View {
 
     public BottomBallView(Context context) {
         super(context);
+        initParams();
+    }
+
+    public BottomBallView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initParams();
+    }
+
+    public void initParams(){
         final float scale = getContext().getResources().getDisplayMetrics().density;
 
         paint = new Paint();
         //paint.setColor(0xFFFF0000);
         paint.setShader(createShader());
         paint.setAlpha(200);
-
         ballRadius = scale * BALL_RADIUS;
-    }
-
-    public BottomBallView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-
     }
 
     public BottomBallView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initParams();
     }
 
 
     public BottomBallView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-
+        initParams();
     }
 
     @Override
