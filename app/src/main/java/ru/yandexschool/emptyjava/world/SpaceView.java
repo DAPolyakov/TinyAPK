@@ -2,7 +2,6 @@ package ru.yandexschool.emptyjava.world;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -13,22 +12,47 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
-import ru.yandexschool.emptyjava.graphics.Asteroid;
+import ru.yandexschool.emptyjava.InvalidateListener;
 
 public class SpaceView extends View {
 
-    //    private float ballRadius;
-    private Paint paint;
-//    final PointF ball = new PointF();
-    private Asteroid asteroid = new Asteroid(100, 100, 50);
+    int windowHeight = 0;
 
     private ArrayList<Ball> items = new ArrayList<>();
+    public InvalidateListener invalidateListener = null;
 
     public void addItem(Ball ball) {
         items.add(ball);
+        invalidate();
     }
 
-    public void startGame() {
+    public boolean isCollision(int top, int bottom, int start, int right) {
+
+        for (Ball ball : items) {
+            if (isBallCollision(ball, top, bottom, start, right)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isBallCollision(Ball ball, int top, int bottom, int start, int right) {
+
+        if (getDownLeft(ball).y < top) return false;
+
+        if ((getDownLeft(ball).x >= start) && (getDownLeft(ball).x <= right)) {
+            return true;
+        }
+
+        if ((getDownRight(ball).x >= start) && (getDownRight(ball).x <= right)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void startGame(int windowHeight) {
+        this.windowHeight = windowHeight;
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -41,8 +65,13 @@ public class SpaceView extends View {
     }
 
     private void moveBalls() {
-        for (Ball ball : items) {
+        for (int i = items.size() - 1; i >= 0; i--) {
+            Ball ball = items.get(i);
             ball.y += 8;
+
+            if (ball.y > windowHeight) {
+                items.remove(ball);
+            }
         }
     }
 
@@ -60,7 +89,12 @@ public class SpaceView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        asteroid.onDraw(canvas);
+        for (Ball ball : items) {
+            canvas.drawCircle(ball.x, ball.y, ball.radius, ball.paint);
+        }
+        if (invalidateListener != null){
+            invalidateListener.invalidate();
+        }
     }
 
     private Point getUpLeft(Ball ball) {
@@ -85,12 +119,18 @@ public class SpaceView extends View {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             float x = event.getX();
             float y = event.getY();
-            for (Ball ball : items) {
-//                if (getUpLeft(ball).x) {
-//
-//                }
+            boolean key = false;
+            for (int i = items.size() - 1; i >= 0; i--) {
+                Ball ball = items.get(i);
+                if (((x > getUpLeft(ball).x) && (x < getUpRight(ball).x))
+                        && ((y > getUpLeft(ball).y) && (y < getDownLeft(ball).y))) {
+                    key = true;
+                    items.remove(ball);
+                }
             }
-
+            if (key) {
+                invalidate();
+            }
             performClick();
         }
         return super.onTouchEvent(event);
