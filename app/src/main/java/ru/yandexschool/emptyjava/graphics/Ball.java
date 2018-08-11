@@ -81,8 +81,8 @@ public class Ball {
             for (int i = 0; i < outerVerticesL.size() - 1; i++) {
                 PointF[] pf = new PointF[3];
                 pf[0] = new PointF(x2, y2);
-                pf[1] = new PointF(outerVerticesL.get(i).x, outerVerticesR.get(i).y);
-                pf[2] = new PointF(outerVerticesL.get(i + 1).x, outerVerticesR.get(i + 1).y);
+                pf[1] = new PointF(outerVerticesL.get(i).x, outerVerticesL.get(i).y);
+                pf[2] = new PointF(outerVerticesL.get(i + 1).x, outerVerticesL.get(i + 1).y);
                 faces.add(pf);
             }
 
@@ -103,11 +103,11 @@ public class Ball {
                 faces.add(pf);
             }
 
-            for (int i = 0; i < outerVerticesR.size() - 1; i++) {
+            for (int i = 0; i < outerVerticesL.size() - 1; i++) {
                 PointF[] pf = new PointF[3];
                 pf[0] = new PointF(x1, y1);
-                pf[1] = new PointF(outerVerticesL.get(i).x, outerVerticesR.get(i).y);
-                pf[2] = new PointF(outerVerticesL.get(i + 1).x, outerVerticesR.get(i + 1).y);
+                pf[1] = new PointF(outerVerticesL.get(i).x, outerVerticesL.get(i).y);
+                pf[2] = new PointF(outerVerticesL.get(i + 1).x, outerVerticesL.get(i + 1).y);
                 faces.add(pf);
             }
 
