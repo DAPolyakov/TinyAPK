@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -68,7 +69,8 @@ public class MainActivity extends Activity {
             int right = bottomBall.getCoordRight();
 
             if (space.isCollision(top, bottom, left, right)) {
-                Toast.makeText(this, "FINISH!", Toast.LENGTH_SHORT).show();
+                Log.wtf("dima", "finish()");
+//                Toast.makeText(this, "FINISH!", Toast.LENGTH_SHORT).show();
             }
         };
     }
