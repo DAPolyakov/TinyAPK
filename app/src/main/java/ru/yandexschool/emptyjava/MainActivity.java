@@ -40,48 +40,14 @@ public class MainActivity extends Activity {
         RelativeLayout layout = findViewById(R.id.root);
         final HeavenView heavenView = new HeavenView(getApplicationContext(), new RectF(0f, 0f, 1000f, 1000f));
         layout.addView(heavenView);
+        space = new SpaceView(this);
+        layout.addView(space);
         for (int i = 0; i < 200; i++) {
             heavenView.update();
         }
 
+        space.startGame();
 
         moveHeaven(heavenView);
     }
-}
-
-        root = findViewById(R.id.root);
-
-        space = new SpaceView(this);
-        root.addView(space);
-
-        for (int i = 0; i < 8; i++) {
-            space.addItem(new Ball(100 + i * 100, 30));
-        }
-
-        for (int i = 0; i < 8; i++) {
-            space.addItem(new Ball(120 + i * 100, 175));
-        }
-
-//        for (int i = 0; i < 8; i++) {
-//            space.addItem(new Ball(100 + i * 100, 325));
-//        }
-//
-//        space.startGame();
-    }
-
-    void throwBall(final SpaceView ball) {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ball.setY(ball.getY() + 8);
-                if (ball.getY() < (WindowUtils.getWindowHeight(MainActivity.this))) {
-                    handler.postDelayed(this, 16);
-                } else {
-                    root.removeView(ball);
-                }
-            }
-        }, 16);
-    }
-
 }

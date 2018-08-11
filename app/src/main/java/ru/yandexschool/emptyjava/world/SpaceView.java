@@ -13,11 +13,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
+import ru.yandexschool.emptyjava.graphics.Asteroid;
+
 public class SpaceView extends View {
 
     //    private float ballRadius;
     private Paint paint;
 //    final PointF ball = new PointF();
+    private Asteroid asteroid = new Asteroid(100, 100, 50);
 
     private ArrayList<Ball> items = new ArrayList<>();
 
@@ -57,9 +60,7 @@ public class SpaceView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for (Ball ball : items) {
-            canvas.drawCircle(ball.x, ball.y, ball.radius, ball.paint);
-        }
+        asteroid.onDraw(canvas);
     }
 
     private Point getUpLeft(Ball ball) {
