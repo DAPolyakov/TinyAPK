@@ -3,7 +3,7 @@ package ru.yandexschool.emptyjava.world;
 
 import android.graphics.Paint;
 
-public class Ball {
+public class OldBall {
 
     public int radius = 45;
 
@@ -11,7 +11,7 @@ public class Ball {
     public int y;
     public Paint paint;
 
-    public Ball() {
+    public OldBall() {
         paint = new Paint();
         paint.setColor(0xFFFF0000);
     }

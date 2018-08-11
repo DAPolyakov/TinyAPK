@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 import ru.yandexschool.emptyjava.InvalidateListener;
+import ru.yandexschool.emptyjava.graphics.Ball;
 
 public class SpaceView extends View {
 
@@ -90,7 +91,8 @@ public class SpaceView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         for (Ball ball : items) {
-            canvas.drawCircle(ball.x, ball.y, ball.radius, ball.paint);
+//            canvas.drawCircle(ball.x, ball.y, ball.radius, ball.paint);
+            ball.onDraw(canvas);
         }
         if (invalidateListener != null){
             invalidateListener.invalidate();

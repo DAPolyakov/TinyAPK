@@ -19,7 +19,6 @@ public class BottomBallView extends View {
 
     InvalidateListener invalidateListener = null;
 
-
     private final float mSpeed = 1.5f;
 
     public int getCoordTop() {
@@ -73,7 +72,6 @@ public class BottomBallView extends View {
         super(context, attrs, defStyleAttr);
         initParams();
     }
-
 
     public BottomBallView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

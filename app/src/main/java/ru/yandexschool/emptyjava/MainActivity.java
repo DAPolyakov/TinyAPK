@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import java.util.Random;
 
+import ru.yandexschool.emptyjava.graphics.Ball;
 import ru.yandexschool.emptyjava.graphics.HeavenView;
 import ru.yandexschool.emptyjava.utils.WindowUtils;
-import ru.yandexschool.emptyjava.world.Ball;
 import ru.yandexschool.emptyjava.world.SpaceView;
 
 public class MainActivity extends Activity {
@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
                 ball.x = randomX;
                 ball.y = -100;
                 space.addItem(ball);
-                handler.postDelayed(this, 500);
+                handler.postDelayed(this, 2000);
             }
         }, 1000);
     }
