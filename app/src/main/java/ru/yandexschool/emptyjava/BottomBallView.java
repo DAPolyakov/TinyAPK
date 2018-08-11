@@ -2,42 +2,82 @@ package ru.yandexschool.emptyjava;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
-
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 public class BottomBallView extends View {
     private float ballRadius;
     private Paint paint;
-    private float x = 0;
-    private float y = 0;
+    float x = 0;
+    float y = 0;
+
+    InvalidateListener invalidateListener = null;
+
+
     private final float mSpeed = 1.5f;
 
+    public int getCoordTop() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[1] + (int) y - ((int) ballRadius);
+    }
+
+    public int getCoordBottom() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[1] + (int) y + ((int) ballRadius);
+    }
+
+    public int getCoordLeft() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[0] + (int) x - (int) ballRadius;
+    }
+
+    public int getCoordRight() {
+        int[] location = new int[2];
+        getLocationOnScreen(location);
+        return location[0] + (int) x + (int) ballRadius;
+    }
 
     private static final float BALL_RADIUS = 15.0f;
 
+
     public BottomBallView(Context context) {
         super(context);
+        initParams();
     }
 
     public BottomBallView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initParams();
+    }
+
+    public void initParams() {
         final float scale = getContext().getResources().getDisplayMetrics().density;
-        ballRadius = scale * BALL_RADIUS;
+
         paint = new Paint();
-        paint.setColor(0xFFFF0000);
+        //paint.setColor(0xFFFF0000);
+        paint.setShader(createShader());
+        paint.setAlpha(200);
+        ballRadius = scale * BALL_RADIUS;
     }
 
     public BottomBallView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initParams();
     }
 
 
     public BottomBallView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-
+        initParams();
     }
 
     @Override
@@ -87,6 +127,10 @@ public class BottomBallView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(x, y, ballRadius, paint);
+
+        if (invalidateListener != null) {
+            invalidateListener.invalidate();
+        }
     }
 
     float lastX = 0;
@@ -117,5 +161,12 @@ public class BottomBallView extends View {
         if (x + ballRadius > getWidth()) {
             x = getWidth() - ballRadius;
         }
+    }
+
+    private Shader createShader() {
+        LinearGradient shader3 = new LinearGradient(0, 0, 100, 20,
+                new int[]{Color.RED, Color.CYAN, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA}, null,
+                Shader.TileMode.MIRROR);
+        return shader3;
     }
 }
