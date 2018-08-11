@@ -49,9 +49,6 @@ public class HeavenView extends View {
         }
     }
 
-    public void generate() {
-
-    }
 
     public void update() {
 
