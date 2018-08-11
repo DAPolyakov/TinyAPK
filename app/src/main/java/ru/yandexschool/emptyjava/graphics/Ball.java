@@ -142,7 +142,7 @@ public class Ball {
 
         if(terminating) {
             destructionSpeed *= 2;
-            if (destructionSpeed > 10000){
+            if (destructionSpeed > 50){
                 terminated = true;
             }
         }
@@ -152,7 +152,6 @@ public class Ball {
 
         for (PointF[] pf : faces) {
             paint.setColor(colors[random.nextInt(4)]);
-            //paint.setColor(Color.MAGENTA);
             for (int i = 0; i < 3; i++) {
 
                 Path path = new Path();

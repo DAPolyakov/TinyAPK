@@ -94,7 +94,7 @@ public class SpaceView extends View {
 //            canvas.drawCircle(ball.x, ball.y, ball.radius, ball.paint);
             ball.onDraw(canvas);
         }
-        if (invalidateListener != null){
+        if (invalidateListener != null) {
             invalidateListener.invalidate();
         }
     }
@@ -124,10 +124,14 @@ public class SpaceView extends View {
             boolean key = false;
             for (int i = items.size() - 1; i >= 0; i--) {
                 Ball ball = items.get(i);
+                if (ball.terminated) {
+                    items.remove(ball);
+                    continue;
+                }
                 if (((x > getUpLeft(ball).x) && (x < getUpRight(ball).x))
                         && ((y > getUpLeft(ball).y) && (y < getDownLeft(ball).y))) {
                     key = true;
-                    items.remove(ball);
+                    ball.terminate();
                 }
             }
             if (key) {
